@@ -30,3 +30,34 @@ node2.next = node3
 
 for node in node1:
     print(node.name)
+
+# In case someone does this:
+
+# it = iter(node1)
+# first = next(it)
+
+# for node in it:
+#     print(node.name)
+
+# We also need to implement __iter__ in NodeIter class:
+
+class NodeIter:
+    def __init__(self, node):
+        self.curr_node = node
+
+    def __next__(self):
+        if self.curr_node is None:
+            raise StopIteration
+        node, self.curr_node = self.curr_node, self.curr_node.next
+        return node
+
+    def __iter__(self):
+        return self
+    
+# Now, the above code will work as expected.
+
+it = iter(node1)
+first = next(it)
+
+for node in it:
+    print(node.name)
